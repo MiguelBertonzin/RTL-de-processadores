@@ -1,0 +1,17 @@
+library ieee; 
+use ieee.std_logic_1164.all; 
+ 
+entity register_16bit is port (  i_CLK      : in std_logic;  	     i_Dctr_clr : in std_logic;  	     i_Dctr_ld  : in std_logic; 
+      i_in       : in std_logic_vector (15 downto 0);       o_out      : out std_logic_vector (15 downto 0)); end register_16bit; 
+ 
+architecture achr_1 of register_16bit is 
+begin 
+       
+ 	process (i_CLK, i_Dctr_ld) 
+ 	begin 
+ 	 	if (i_Dctr_clr = '1') then  	 	 	o_out <= (others => '0');  	 	elsif(i_Dctr_ld = '1') then  	 	  if(rising_edge(i_CLK)) then 
+ 	 	    o_out <= i_in;  	 	  end if;  	 	end if; 
+ 	end process; 
+end architecture; 
+
+

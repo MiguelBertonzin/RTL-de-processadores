@@ -1,0 +1,11 @@
+library IEEE; 
+use IEEE.std_logic_1164.all; 
+ 
+entity shift_r is port ( i_in  : in  std_logic_vector (15 downto 0);        o_out : out std_logic_vector (15 downto 0)); end shift_r; 
+ 
+architecture arch_1 of shift_r is begin 
+---- processo de registro ---- 
+ 
+o_out(14 downto 0) <= i_in(15 downto 1); o_out(15) <= '0'; 
+ 
+end arch_1; 

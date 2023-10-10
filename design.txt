@@ -1,0 +1,30 @@
+library IEEE; use IEEE.std_logic_1164.all; 
+ 
+entity design is 
+
+port (  i_CLR_n : in  std_logic;         i_CLK   : in  std_logic;         i_B       : in  std_logic;         i_S       : in  std_logic;         o_L      : out std_logic; 
+        o_D     : out std_logic_vector (15 downto 0)); end design; 
+ 
+architecture arch_1 of design is     component datapath is  
+        port (  i_CLK      : in  std_logic;                 i_Dreg_clr : in  std_logic;                 i_Dreg_ld  : in  std_logic;                 i_Dctr_clr : in  std_logic;                 i_Dctr_ld  : in  std_logic; 
+                o_D        : out std_logic_vector (15 downto 0));     end component; 
+ 
+    component fsm_laser is 
+        port (  i_CLR_n    : in std_logic; -- clear/reset                 i_CLK    : in std_logic; -- data input 
+                i_B        : in std_logic;                 i_S        : in std_logic; 
+ 	 	 	 	 	 o_L        : out std_logic;                 o_Dreg_clr : out std_logic;                 o_Dreg_ld  : out std_logic;                 o_Dctr_clr : out std_logic; 
+                o_Dctr_ld  : out std_logic);     end component; 
+ 
+    signal w_reg_clr : std_logic;     signal w_reg_ld  : std_logic;     signal w_ctr_clr : std_logic; 
+    signal w_ctr_ld  : std_logic; 
+ 
+begin 
+---- processo de registro ---- 
+    u_0 : datapath port map (   i_CLK      => i_CLK,                                 i_Dreg_clr => w_reg_clr,                                 i_Dreg_ld  => w_reg_ld,                                 i_Dctr_clr => w_ctr_clr,                                 i_Dctr_ld  => w_ctr_ld,                                 o_D        => o_D); 
+ 
+    u_1 : fsm_laser port map (  i_CLR_n    => i_CLR_n,                                 i_CLK      => i_CLK,                                 i_B        => i_B,                                 i_S        => i_S, 
+ 	 	 	 	 	 	 	 	 
+=> o_L, 
+                                o_Dreg_clr => w_reg_clr,                                 o_Dreg_ld  => w_reg_ld, 	 	            o_L     
+                                o_Dctr_clr => w_ctr_clr,                                 o_Dctr_ld  => w_ctr_ld); 
+end arch_1; 
